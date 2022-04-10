@@ -18,15 +18,15 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     final fbm = FirebaseMessaging.instance;
-
-    onLaunch:
-    (msg) {
+    fbm.requestPermission();
+    FirebaseMessaging.onMessage.listen((message) {
+      print(message);
       return;
-    };
-    onResume:
-    (msg) {
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      print(message);
       return;
-    };
+    });
     fbm.subscribeToTopic('chat');
   }
 
@@ -37,6 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: const Text('Flutter chatting Application'),
         actions: <Widget>[
           DropdownButton(
+              underline: Container(),
               icon: const Icon(
                 Icons.more_vert,
               ),
